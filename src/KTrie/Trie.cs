@@ -67,6 +67,9 @@ namespace KTrie
             }
         }
 
+        public IEnumerable<TrieEntry<TKey, TValue>> GetPartialItems(IEnumerable<TKey> partial) =>
+            _trie.GetPartialItems(partial).Cast<TrieEntryPrivate>().Select(i => new TrieEntry<TKey, TValue>(i, i.Value));
+
         /// <summary>
         /// Gets items by key prefix.
         /// </summary>

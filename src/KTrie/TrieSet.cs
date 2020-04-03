@@ -146,6 +146,22 @@ namespace KTrie
             return true;
         }
 
+        public IEnumerable<IEnumerable<T>> GetPartialItems(IEnumerable<T> full)
+        {
+            if (full == null) throw new ArgumentNullException(nameof(full));
+
+            var node = _root;
+
+            foreach (var item in full)
+            {
+                if (!node.Children.TryGetValue(item, out node))
+                    break;
+
+                if (node.IsTerminal)
+                    yield return GetFullKey(node);
+            }
+        }
+
         /// <summary>
         /// Gets items by key prefix.
         /// </summary>

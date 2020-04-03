@@ -114,6 +114,9 @@ namespace KTrie
         /// <exception cref="T:System.ArgumentNullException"><paramref name="key"/> is null.</exception>
         public bool ContainsKey(string key) => _trie.ContainsKey(key);
 
+        public IEnumerable<StringEntry<TValue>> GetPartialItems(string full) =>
+            _trie.GetPartialItems(full).Select(i => new StringEntry<TValue>(new string(i.Key.ToArray()), i.Value));
+
         /// <summary>
         /// Gets items by key prefix.
         /// </summary>

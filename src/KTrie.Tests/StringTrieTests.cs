@@ -111,6 +111,22 @@ namespace KTrie.Tests
         }
 
         [Fact]
+        public void GetPartialItems()
+        {
+            var trie = new StringTrie<bool> { { "ABC", false }, { "AB", false } };
+
+            ((ICollection<KeyValuePair<string, bool>>) trie).Add(new KeyValuePair<string, bool>("ADE", false));
+            trie.Add("ABCDE", false);
+
+            var result = trie.GetPartialItems("ABCDE").Select(t => t.Key);
+
+            string[] expectedResult = { "AB", "ABC", "ABCDE" };
+
+            Assert.Equal(4, trie.Count);
+            Assert.True(expectedResult.SequenceEqual(result));
+        }
+
+        [Fact]
         public void GetByPrefix()
         {
             var trie = new StringTrie<bool> { { "ABC", false }, { "AB", false } };
